@@ -4,6 +4,9 @@ pipeline {
     stages {
         stage('Checkout') { 
             steps {
+                script {
+                    properties([parameters([booleanParam('test')])])
+                }
                 git credentialsId: "${github_creds}" , url: "${github_repo}" 
             }
         }
