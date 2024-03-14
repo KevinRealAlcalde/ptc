@@ -1,5 +1,7 @@
 pipeline {
     agent any
+
+    properties([parameters([string(defaultValue: 'wololo', description: 'wololo', name: 'wololo', trim: true)]), [$class: 'JobLocalConfiguration', changeReasonComment: '']])
     
     stages {
         stage('Checkout') { 
