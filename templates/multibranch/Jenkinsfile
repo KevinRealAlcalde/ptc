@@ -1,7 +1,9 @@
 pipeline {
     agent any
 
-    options([parameters([string(defaultValue: 'wololo', description: 'wololo', name: 'wololo', trim: true)]), [$class: 'JobLocalConfiguration', changeReasonComment: '']])
+    options {
+        [parameters([string(defaultValue: 'wololo', description: 'wololo', name: 'wololo', trim: true)]), [$class: 'JobLocalConfiguration', changeReasonComment: '']])
+    }
     
     stages {
         stage('Checkout') { 
