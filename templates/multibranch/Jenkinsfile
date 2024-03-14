@@ -1,10 +1,9 @@
 pipeline {
     agent any
 
-    options {
-        [parameters([string(defaultValue: 'wololo', description: 'wololo', name: 'wololo', trim: true)]), [$class: 'JobLocalConfiguration', changeReasonComment: '']])
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
     }
-    
     stages {
         stage('Checkout') { 
             steps {
