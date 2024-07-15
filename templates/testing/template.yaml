@@ -1,4 +1,4 @@
-version: 1
+version: 2
 type: pipeline-template
 templateType: MULTIBRANCH
 name: Build Maven Project
@@ -20,6 +20,7 @@ parameters:
       - main
       - develop
       - master
+      - wololo
 multibranch:
   branchSource:
     github:
