@@ -21,6 +21,7 @@ parameters:
       - develop
       - master
       - wololo
+      - otrowololo
 multibranch:
   branchSource:
     github:
