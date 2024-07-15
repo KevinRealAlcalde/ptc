@@ -1,0 +1,56 @@
+version: 1
+type: pipeline-template
+templateType: MULTIBRANCH
+name: Build Maven Project
+description: Pipeline to run CI for a Microservice
+parameters:
+  - name: github_org
+    type: string
+    displayName: GitHub Org
+    defaultValue: htz-plateng
+  - name: github_repo_name
+    type: string
+    displayName: GitHub Repo Name
+    defaultValue: demo-spring-boot-svc
+  - name: github_branch
+    displayName: GitHub Branch
+    type: string
+    defaultValue: main
+    allowedValues:
+      - main
+      - develop
+      - master
+multibranch:
+  branchSource:
+    github:
+      repoOwner: ${github_org}
+      repository: ${github_repo_name}
+      traits:
+        - gitHubBranchDiscovery:
+            strategyId: 1
+        - gitHubPullRequestDiscovery:
+            strategyId: 2
+        - gitHubForkDiscovery:
+            strategyId: 1
+            trust:
+              $class: TrustPermission
+        - headWildcardFilter:
+            includes: ${github_branch} hotfix* PR-* feature*
+        - cloneOption:
+            extension:
+              cloneOption:
+                reference: ''
+                noTags: false
+                honorRefspec: false
+                shallow: false
+        - gitHubTagDiscovery: {
+            }
+        - refSpecs:
+            templates:
+            - value: +refs/heads/*:refs/remotes/@{remote}/*
+    strategy:
+      allBranchesSame:
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: (${github_branch}|.*feature\/.*|.*hotfix\/.*|.*bugfix\/.*|PR-\d+.)
+            strategy: INDEXING
