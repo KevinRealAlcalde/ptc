@@ -1,16 +1,60 @@
-version: 1
 type: pipeline-template
-
-name: Java Maven App Pipeline Job
-description: Simple Java App With Maven
+version: 1
+name: test
+description: test
+templateType: MULTIBRANCH
 parameters:
-  - name: emailRecipient
+  - name: organisation
+    displayName: GitHub Organisation
     type: string
-    displayName: Email address to be used for sending build notifications
-  - name: github_repo
+  - name: repoName
+    displayName: Git Repository
     type: string
-    displayName: GitHub HTTPS repo endpoint
-  - name: github_creds
-    displayName: GitHub Credentials ID
-    type: credentials
-    defaultValue: github-creds-example
+  - name: githubAppKey
+    displayName: GitHub App Key (compatible with GitHub Checks) OR GitHub Auth Token
+    type: CREDENTIALS
+  - name: SourceToBuild
+    displayName: Source to build (Accept Regex) - Example - ^(main|PR-.*|v1.*)
+    type: string
+    defaultValue: .*
+
+multibranch:
+  markerFile: ci-config.yaml
+  branchSource:
+    github:
+      apiUri: test
+      repoOwner: ${organisation}
+      repository: ${repoName}
+      credentialsId: ${githubAppKey}
+      traits:
+          - gitHubBranchDiscovery:
+              strategyId: 3
+          - gitHubPullRequestDiscovery:
+              strategyId: 2
+          - gitHubForkDiscovery:
+              trust:
+                gitHubTrustEveryone: {
+                  }
+              strategyId: 2
+          - headRegexFilter:
+              regex: ${SourceToBuild}
+          - gitHubTagDiscovery: {
+          }
+          - gitHubIgnoreDraftPullRequestFilter: {
+            }
+          - gitHubStatusChecks:
+              suppressLogs: false
+              name: test
+              skip: false
+              skipNotifications: true
+              skipProgressUpdates: false
+              unstableBuildNeutral: true
+    buildStrategies:
+      - skipInitialBuildOnFirstIndexingResetRevision: {
+        }
+    strategy:
+      allBranchesSame:
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: ${SourceToBuild}
+            strategy: INDEXING
