@@ -26,29 +26,6 @@ multibranch:
       repoOwner: ${organisation}
       repository: ${repoName}
       credentialsId: ${githubAppKey}
-      traits:
-          - gitHubBranchDiscovery:
-              strategyId: 3
-          - gitHubPullRequestDiscovery:
-              strategyId: 2
-          - gitHubForkDiscovery:
-              trust:
-                gitHubTrustEveryone: {
-                  }
-              strategyId: 2
-          - headRegexFilter:
-              regex: ${SourceToBuild}
-          - gitHubTagDiscovery: {
-          }
-          - gitHubIgnoreDraftPullRequestFilter: {
-            }
-          - gitHubStatusChecks:
-              suppressLogs: false
-              name: test
-              skip: false
-              skipNotifications: true
-              skipProgressUpdates: false
-              unstableBuildNeutral: true
     buildStrategies:
       - skipInitialBuildOnFirstIndexingResetRevision: {
         }
