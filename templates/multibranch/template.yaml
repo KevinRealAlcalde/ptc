@@ -21,6 +21,8 @@ parameters:
 multibranch:
   markerFile: ci-config.yaml
   branchSource:
+    buildStrategies:
+      - skipInitialBuildOnFirstIndexingResetRevision: {}
     github:
       apiUri: test
       repoOwner: ${organisation}
@@ -49,8 +51,6 @@ multibranch:
               skipNotifications: true
               skipProgressUpdates: false
               unstableBuildNeutral: true
-    buildStrategies:
-      - skipInitialBuildOnFirstIndexingResetRevision: {}
     strategy:
       allBranchesSame:
         props:
