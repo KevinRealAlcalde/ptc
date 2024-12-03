@@ -49,6 +49,8 @@ multibranch:
               skipNotifications: true
               skipProgressUpdates: false
               unstableBuildNeutral: true
+    buildStrategies:
+      - skipInitialBuildOnFirstIndexingResetRevision: {}
     strategy:
       allBranchesSame:
         props:
