@@ -26,7 +26,6 @@ multibranch:
   markerFile: ${pipelineConfig}
   branchSource:
     github:
-      apiUri: test
       repoOwner: ${organisation}
       repository: ${repoName}
       credentialsId: ${githubAppKey}
