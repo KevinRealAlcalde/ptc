@@ -26,7 +26,7 @@ multibranch:
   markerFile: ${pipelineConfig}
   branchSource:
     buildStrategies:
-      - skipInitialBuildOnFirstIndexingResetRevision: {}
+      - $class: SkipInitialBuildOnFirstBranchIndexing
     github:
       apiUri: test
       repoOwner: ${organisation}
