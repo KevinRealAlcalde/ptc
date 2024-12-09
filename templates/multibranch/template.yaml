@@ -17,9 +17,13 @@ parameters:
     displayName: Source to build (Accept Regex) - Example - ^(main|PR-.*|v1.*)
     type: string
     defaultValue: .*
+  - name: pipelineConfig
+    displayName: TEST
+    type: string
+    defaultValue: ci-config.yaml
 
 multibranch:
-  markerFile: ci-config.yaml
+  markerFile: ${pipelineConfig}
   branchSource:
     buildStrategies:
       - skipInitialBuildOnFirstIndexingResetRevision: {}
@@ -51,8 +55,6 @@ multibranch:
               skipNotifications: true
               skipProgressUpdates: false
               unstableBuildNeutral: true
-    buildStrategies:
-      - $class: SkipInitialBuildOnFirstBranchIndexing
     strategy:
       allBranchesSame:
         props:
