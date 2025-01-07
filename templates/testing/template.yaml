@@ -22,7 +22,7 @@ parameters:
       - master
       - wololo
       - otrowololo
-      - maswololo
+      - maswololo2
 multibranch:
   branchSource:
     github:
