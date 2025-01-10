@@ -1,7 +1,7 @@
 version: 1
 type: pipeline-template
 templateType: MULTIBRANCH
-name: Build Maven Project
+name: Build Maven Project 2
 description: Pipeline to run CI for a Microservice
 parameters:
   - name: github_org
