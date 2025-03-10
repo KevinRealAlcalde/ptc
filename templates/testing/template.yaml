@@ -1,59 +1,90 @@
-version: 1
 type: pipeline-template
+version: 1
+name: Testing 2 multibranches
+description: Testing 2 multibranches
 templateType: MULTIBRANCH
-name: Build Maven Project 2
-description: Pipeline to run CI for a Microservice
 parameters:
-  - name: github_org
+  - name: organisation
+    displayName: GitHub Organisation
     type: string
-    displayName: GitHub Org 23456
-    defaultValue: htz-plateng
-  - name: github_repo_name
+  - name: repoName
+    displayName: Git Repository
     type: string
-    displayName: GitHub Repo Name
-    defaultValue: demo-spring-boot-svc
-  - name: github_branch
-    displayName: GitHub Branch
+  - name: githubAppKey
+    displayName: GitHub App Key
+    type: CREDENTIALS
+  - name: sourceToBuild
+    displayName: Source to build
     type: string
     defaultValue: main
-    allowedValues:
-      - main
-      - develop
-      - master
-      - wololo
-      - otrowololo
-      - maswololo2
+  #- name: pipelineToRun
+  #  displayName: Pipeline To Run - Accepted Options - ci-flow, hdpv2-self-release
+  #  type: string
+  #  defaultValue: ci-flow
+
+#see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
+# for options of multibranch, see https://www.jenkins.io/doc/pipeline/steps/params/multibranch/
 multibranch:
+  markerFile: ci-config.yaml
   branchSource:
     github:
-      repoOwner: ${github_org}
-      repository: ${github_repo_name}
+      apiUri: https://www.test.com
+      repoOwner: ${organisation}
+      repository: ${repoName}
+      credentialsId: ${githubAppKey}
       traits:
-        - gitHubBranchDiscovery:
-            strategyId: 1
-        - gitHubPullRequestDiscovery:
-            strategyId: 2
-        - gitHubForkDiscovery:
-            strategyId: 1
-            trust:
-              $class: TrustPermission
-        - headWildcardFilter:
-            includes: ${github_branch} hotfix* PR-* feature*
-        - cloneOption:
-            extension:
-              cloneOption:
-                reference: ''
-                noTags: false
-                honorRefspec: false
-                shallow: false
-        - gitHubTagDiscovery: {
+          - gitHubBranchDiscovery:
+              strategyId: 3
+          - gitHubPullRequestDiscovery:
+              strategyId: 2
+          - gitHubForkDiscovery:
+              trust:
+                gitHubTrustEveryone: {
+                  }
+              strategyId: 2
+          - headRegexFilter:
+              regex: ${sourceToBuild}
+          - gitHubTagDiscovery: {
             }
-        - refSpecs:
-            templates:
-            - value: +refs/heads/*:refs/remotes/@{remote}/*
+          - gitHubIgnoreDraftPullRequestFilter: {
+            }
+    #buildStrategies:
+    #  - skipInitialBuildOnFirstIndexingResetRevision: {
+    #    }
     strategy:
       allBranchesSame:
         props:
         - suppressAutomaticTriggering:
-            triggeredBranchesRegex: (${github_branch}|.*feature\/.*|.*hotfix\/.*|.*bugfix\/.*|PR-\d+.)
+            triggeredBranchesRegex: ${sourceToBuild}
+            strategy: INDEXING
+multibranch:
+  markerFile: ci-config.yaml
+  branchSource:
+    bitbucket:
+      serverUrl: ${bitbucketServerUrl}
+      repoOwner: ${owner}
+      repository: ${repoName}
+      credentialsId: ${bitBucketToken}
+      traits:
+          - bitbucketBranchDiscovery:
+              strategyId: 3
+          - bitbucketPullRequestDiscovery:
+              strategyId: 2
+          - bitbucketForkDiscovery:
+              trust:
+                bitbucketTrustEveryone: {
+                  }
+              strategyId: 2
+          - headRegexFilter:
+              regex: ${sourceToBuild}
+          - bitbucketTagDiscovery: {
+            }
+    #buildStrategies:
+    #  - skipInitialBuildOnFirstIndexingResetRevision: {
+    #    }
+    strategy:
+      allBranchesSame:
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: ${sourceToBuild}
             strategy: INDEXING
