@@ -34,24 +34,6 @@ multibranch:
               strategyId: 3
           - gitHubPullRequestDiscovery:
               strategyId: 2
-          - gitHubForkDiscovery:
-              trust:
-                gitHubTrustEveryone: {
-                  }
-              strategyId: 2
-          - headRegexFilter:
-              regex: ${SourceToBuild}
-          - gitHubTagDiscovery: {
-          }
-          - gitHubIgnoreDraftPullRequestFilter: {
-            }
-          - gitHubStatusChecks:
-              suppressLogs: false
-              name: test
-              skip: false
-              skipNotifications: true
-              skipProgressUpdates: false
-              unstableBuildNeutral: true
     strategy:
       allBranchesSame:
         props:
