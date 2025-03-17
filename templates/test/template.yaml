@@ -1,0 +1,6 @@
+multibranch:
+  branchSource:
+    github:
+      repository: foobar.github.com
+    buildStrategies:
+      - $class: SkipInitialBuildOnFirstBranchIndexing
