@@ -22,5 +22,5 @@ multibranch:
       allBranchesSame:
         props:
         - suppressAutomaticTriggering:
-            triggeredBranchesRegex: .*
-            strategy: INDEXING
+            triggeredBranchesRegex: ./
+            strategy: EVENTS
