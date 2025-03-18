@@ -4,9 +4,23 @@ name: test2
 description: test2
 templateType: MULTIBRANCH
 
+parameters:
+  - name: repoName
+    displayName: Git Repository
+    type: string
+
 multibranch:
   branchSource:
     github:
-      repository: foobar.github.com
-    buildStrategies:
-      - $class: SkipInitialBuildOnFirstBranchIndexing
+      repository: ${repoName}
+      traits:
+          - gitHubBranchDiscovery:
+              strategyId: 3
+          - gitHubPullRequestDiscovery:
+              strategyId: 2
+    strategy:
+      allBranchesSame:
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: .*
+            strategy: INDEXING
