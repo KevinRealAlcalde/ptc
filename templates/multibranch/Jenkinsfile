@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') { 
             steps {
-                git credentialsId: WOLOLO , url: git@github.com:KevinRealAlcalde/private.git
+                git credentialsId: "WOLOLO" , url: "git@github.com:KevinRealAlcalde/private.git"
             }
         }
     }
