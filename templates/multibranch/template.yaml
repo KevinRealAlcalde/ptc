@@ -19,8 +19,8 @@ multibranch:
       traits:
         - $class: CloneOptionTrait
           extension:
-            depth: 1
+            depth: 2
             honorRefspec: true
             noTags: true
             shallow: true
-            test: true
+            WOLOLO: 2
