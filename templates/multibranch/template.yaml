@@ -16,10 +16,10 @@ multibranch:
     git:
       remote: ${repoName}
       credentialsId: ${password}
-      traits:
-        - $class: CloneOptionTrait
-          extension:
-            depth: 1
-            honorRefspec: true
-            noTags: true
-            shallow: true
+      
+      strategy:
+      allBranchesSame:
+      props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: ".*"
+            strategy: INDEXING
