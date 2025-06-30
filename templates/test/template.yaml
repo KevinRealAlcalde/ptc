@@ -9,7 +9,7 @@ multibranch:
     github:
       repoOwner: KevinRealAlcalde
       repository: private
-      credentialsId: private
+      credentialsId: WOLOLO
       traits:
           - gitHubBranchDiscovery:
               strategyId: 3
