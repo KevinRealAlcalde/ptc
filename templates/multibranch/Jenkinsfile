@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') { 
             steps {
-                git credentialsId: "${github_creds}" , url: "${github_repo}" 
+                git credentialsId: WOLOLO , url: git@github.com:KevinRealAlcalde/private.git
             }
         }
     }
