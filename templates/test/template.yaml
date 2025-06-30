@@ -28,7 +28,7 @@ multibranch:
     github:
       repoOwner: ${organisation}
       repository: ${repoName}
-      credentialsId: ${githubAppKey}
+      credentialsId: jenkins
       traits:
           - gitHubBranchDiscovery:
               strategyId: 3
