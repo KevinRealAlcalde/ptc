@@ -9,7 +9,7 @@ multibranch:
     github:
       repoOwner: KevinRealAlcalde
       repository: private
-      credentialsId: jenkins
+      credentialsId: private
       traits:
           - gitHubBranchDiscovery:
               strategyId: 3
