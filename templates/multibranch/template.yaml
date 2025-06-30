@@ -16,3 +16,9 @@ multibranch:
     git:
       remote: ${repoName}
       credentialsId: ${password}
+        - $class: CloneOptionTraitAdd commentMore actions
+            extension:
+              depth: 1
+              honorRefspec: true
+              noTags: true
+              shallow: true
