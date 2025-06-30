@@ -4,39 +4,22 @@ name: test
 description: test
 templateType: MULTIBRANCH
 parameters:
-  - name: organisation
-    displayName: GitHub Organisation
-    type: string
   - name: repoName
     displayName: Git Repository
     type: string
-  - name: githubAppKey
-    displayName: GitHub App Key (compatible with GitHub Checks) OR GitHub Auth Token
+  - name: password
+    displayName: password
     type: CREDENTIALS
-  - name: SourceToBuild
-    displayName: Source to build (Accept Regex) - Example - ^(main|PR-.*|v1.*)
-    type: string
-    defaultValue: .*
-  - name: pipelineConfig
-    displayName: TEST
-    type: string
-    defaultValue: ci-config.yaml
 
 multibranch:
-  markerFile: ${pipelineConfig}
   branchSource:
-    github:
-      repoOwner: ${organisation}
+    git:
       repository: ${repoName}
-      credentialsId: ${githubAppKey}
+      credentialsId: ${password}
       traits:
-          - gitHubBranchDiscovery:
-              strategyId: 3
-          - gitHubPullRequestDiscovery:
-              strategyId: 2
-    strategy:
-      allBranchesSame:
-        props:
-        - suppressAutomaticTriggering:
-            triggeredBranchesRegex: ${SourceToBuild}
-            strategy: INDEXING
+          - $class: CloneOptionTrait
+            extension:
+              depth: 1
+              honorRefspec: true
+              noTags: true
+              shallow: true
