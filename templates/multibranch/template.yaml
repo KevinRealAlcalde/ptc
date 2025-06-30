@@ -17,7 +17,7 @@ multibranch:
       remote: ${repoName}
       credentialsId: ${password}
       traits:
-        - $class: CloneOptionTraitAdd commentMore actions
+        - $class: CloneOptionTrait
           extension:
             depth: 1
             honorRefspec: true
