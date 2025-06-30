@@ -14,7 +14,8 @@ parameters:
 multibranch:
   branchSource:
     git:
-      repository: ${repoName}
+      remote: ${repoName}
+      credentialsId: ${password}
       traits:
           - $class: CloneOptionTrait
             extension:
