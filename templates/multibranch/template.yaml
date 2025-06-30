@@ -16,9 +16,10 @@ multibranch:
     git:
       remote: ${repoName}
       credentialsId: ${password}
+      traits:
         - $class: CloneOptionTraitAdd commentMore actions
-            extension:
-              depth: 1
-              honorRefspec: true
-              noTags: true
-              shallow: true
+          extension:
+            depth: 1
+            honorRefspec: true
+            noTags: true
+            shallow: true
